@@ -1,0 +1,1319 @@
+{
+  "info": {
+    "_postman_id": "fbdbd1b2-2f7a-4d4c-9ffd-c0a1f564423a",
+    "name": "PlanitPrep API",
+    "description": "Postman collection generated from routes/api.php and the API controllers in this repository.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://127.0.0.1:8001"
+    },
+    {
+      "key": "apiUser",
+      "value": "DietitianApi"
+    },
+    {
+      "key": "apiKey",
+      "value": "9wych3yrke61pf0f92ztiodm30inv9o70lg1a11vwpctu5b5kz"
+    },
+    {
+      "key": "authToken",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "System",
+      "item": [
+        {
+          "name": "Stripe Webhook",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Stripe-Signature", "value": "t=0,v1=replace-me" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"evt_test_webhook\",\n  \"type\": \"customer.subscription.created\",\n  \"data\": {\n    \"object\": {}\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/stripe/webhook",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "stripe", "webhook"]
+            },
+            "description": "Stripe callback endpoint."
+          }
+        },
+        {
+          "name": "Test DB",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": 1,\n  \"id\": \"pi_test_123\",\n  \"amount\": 499,\n  \"currency\": \"usd\",\n  \"status\": \"paid\",\n  \"payment_method\": \"card\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/testDB",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "testDB"]
+            }
+          }
+        },
+        {
+          "name": "Current User",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/user",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "user"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Authenticate",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_input\": \"user@example.com\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/authenticate",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "authenticate"]
+            }
+          }
+        },
+        {
+          "name": "Verify OTP",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_input\": \"user@example.com\",\n  \"otp\": \"123456\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/verify-otp",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "verify-otp"]
+            },
+            "description": "Current code accepts the hardcoded OTP 123456."
+          }
+        },
+        {
+          "name": "Social Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"user@example.com\",\n  \"login_type\": \"G\",\n  \"ios_uuid\": \"optional-for-apple\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/social-login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "social-login"]
+            }
+          }
+        },
+        {
+          "name": "Refresh",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/refresh",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "refresh"]
+            }
+          }
+        },
+        {
+          "name": "Resend OTP",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_input\": \"user@example.com\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/resend-otp",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "resend-otp"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Public Data",
+      "item": [
+        {
+          "name": "App Config",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/app-config?version=1.0.0+18",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "app-config"],
+              "query": [{ "key": "version", "value": "1.0.0+18" }]
+            }
+          }
+        },
+        {
+          "name": "Get Countries",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/get-countries",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "get-countries"]
+            }
+          }
+        },
+        {
+          "name": "Get States",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/get-states?country_id=1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "get-states"],
+              "query": [{ "key": "country_id", "value": "1" }]
+            }
+          }
+        },
+        {
+          "name": "Get Cities",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/get-cities?state_id=1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "get-cities"],
+              "query": [{ "key": "state_id", "value": "1" }]
+            }
+          }
+        },
+        {
+          "name": "Get Packages",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/get-packages",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "get-packages"]
+            }
+          }
+        },
+        {
+          "name": "Get Food Items",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/get-food-items?page_size=20&search=rice",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "get-food-items"],
+              "query": [
+                { "key": "page_size", "value": "20" },
+                { "key": "search", "value": "rice" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Legacy Weekly Diet Trigger",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/getWeeklyDietPlanFromChatGPT",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "getWeeklyDietPlanFromChatGPT"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Subscription Plans",
+      "item": [
+        {
+          "name": "Create Plan",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Starter\",\n  \"price\": \"499\",\n  \"duration\": \"1 month\",\n  \"price_id\": \"price_basic_monthly\",\n  \"highlight\": false,\n  \"features\": [\"Meal plans\", \"Macro tracking\"]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/plans/create",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "plans", "create"]
+            }
+          }
+        },
+        {
+          "name": "Update Plan",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"price_id\": \"price_basic_monthly\",\n  \"title\": \"Starter Plus\",\n  \"price\": \"699\",\n  \"duration\": \"1 month\",\n  \"highlight\": true,\n  \"features\": [\"Meal plans\", \"Macro tracking\", \"AI meals\"]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/plans/update",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "plans", "update"]
+            }
+          }
+        },
+        {
+          "name": "Delete Plan",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"price_id\": \"price_basic_monthly\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/plans/delete",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "plans", "delete"]
+            }
+          }
+        },
+        {
+          "name": "Get All Plans",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/plans/getAllPlans",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "plans", "getAllPlans"]
+            }
+          }
+        },
+        {
+          "name": "Check Subscription",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": 1,\n  \"price_id\": \"price_basic_monthly\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/checkSubscription",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "checkSubscription"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "AI Meals",
+      "item": [
+        {
+          "name": "Get Full Diet Plan",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": 1,\n  \"prep_type\": \"DAY_WISE_MEAL\",\n  \"date\": \"2026-03-25\",\n  \"day\": 1,\n  \"isrefresh\": 0\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/get-full-diet-plan",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "get-full-diet-plan"]
+            }
+          }
+        },
+        {
+          "name": "Get Surprise Meal",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": 1,\n  \"type\": \"surprise_meal\",\n  \"prep_type\": \"DAY_WISE_MEAL\",\n  \"date\": \"2026-03-25\",\n  \"isrefresh\": 0\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/get-surprise-meal",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "get-surprise-meal"]
+            }
+          }
+        },
+        {
+          "name": "Get User Meal",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": 1,\n  \"userid\": 1,\n  \"type\": \"diet_plan\",\n  \"prep_type\": \"DAY_WISE_MEAL\",\n  \"date\": \"2026-03-25\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/get-user-meal",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "get-user-meal"]
+            },
+            "description": "Includes both user_id and userid because the controller validates one and reads the other."
+          }
+        },
+        {
+          "name": "Add Favourite Meal",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": 1,\n  \"date\": \"2026-03-25\",\n  \"type\": \"diet_plan\",\n  \"meal_type\": \"Breakfast\",\n  \"prep_type\": \"DAY_WISE_MEAL\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/add-favourite-meal",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "add-favourite-meal"]
+            }
+          }
+        },
+        {
+          "name": "Delete Favourite Meal",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 1\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/delete-favourite-meal",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "delete-favourite-meal"]
+            }
+          }
+        },
+        {
+          "name": "Get Favourite Meals",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": 1\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/get-favourite-meal",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "get-favourite-meal"]
+            }
+          }
+        },
+        {
+          "name": "Check Is Favourite",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": 1,\n  \"date\": \"2026-03-25\",\n  \"type\": \"diet_plan\",\n  \"prep_type\": \"DAY_WISE_MEAL\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/check-isFavourite",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "check-isFavourite"]
+            }
+          }
+        },
+        {
+          "name": "Check SM Is Favourite",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": 1,\n  \"date\": \"2026-03-25\",\n  \"type\": \"surprise_meal\",\n  \"prep_type\": \"DAY_WISE_MEAL\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/check-SM-isFavourite",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "check-SM-isFavourite"]
+            }
+          }
+        },
+        {
+          "name": "Update Is Favourite",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": 1,\n  \"type\": \"diet_plan\",\n  \"date\": \"2026-03-25\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/update-isFavourite",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "update-isFavourite"]
+            },
+            "description": "Route exists, but the controller method is commented out in the current codebase."
+          }
+        },
+        {
+          "name": "Remove Favourite",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": 1,\n  \"date\": \"2026-03-25\",\n  \"type\": \"diet_plan\",\n  \"meal_type\": \"Breakfast\",\n  \"prep_type\": \"DAY_WISE_MEAL\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/remove-isFavourite",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "remove-isFavourite"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Batch Meals",
+      "item": [
+        {
+          "name": "Generate Batch Meal",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": 1,\n  \"number_of_meals\": 2,\n  \"is_refresh\": 0\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/generate-batch-meal",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "generate-batch-meal"]
+            }
+          }
+        },
+        {
+          "name": "Consume Batch Meal Portion",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": 1,\n  \"recipe_id\": 1\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/consume-batch-meal",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "consume-batch-meal"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Protected Payments and Subscription",
+      "item": [
+        {
+          "name": "Create Payment Intent",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 49900\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/create-payment-intent",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "create-payment-intent"]
+            }
+          }
+        },
+        {
+          "name": "Create Subscription",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"price_id\": \"price_basic_monthly\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/create-subscription",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "create-subscription"]
+            }
+          }
+        },
+        {
+          "name": "Cancel Subscription",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subscription_id\": \"sub_example\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cancel-subscription",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "cancel-subscription"]
+            },
+            "description": "Route exists in routes/api.php, but the current controller file does not implement cancel()."
+          }
+        },
+        {
+          "name": "Verify Payment",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"payment_intent\": \"pi_example\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/verify-payment",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "verify-payment"]
+            },
+            "description": "Route exists in routes/api.php, but the current controller file does not implement verify()."
+          }
+        },
+        {
+          "name": "Payments and Subscriptions Data",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/payments-subscriptions-data",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "payments-subscriptions-data"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Protected User",
+      "item": [
+        {
+          "name": "Update User Information",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"full_name\": \"Test User\",\n  \"gender\": \"M\",\n  \"age\": 28,\n  \"height\": 175,\n  \"weight\": 78,\n  \"target_value\": 72,\n  \"country_id\": 1,\n  \"state_id\": 1,\n  \"city_id\": 1,\n  \"goal_id\": 1,\n  \"fitness_level_id\": 1,\n  \"exercise_plan_day_id\": 3,\n  \"daily_calorie_intake\": 2200,\n  \"medical_issue_ids\": \"1,2\",\n  \"allergy_ids\": \"1,2\",\n  \"user_pref_id\": 1,\n  \"regime_ids\": \"1,2\",\n  \"cooking_prep_id\": 1,\n  \"cuisine_id\": 1,\n  \"cooking_time_id\": 1,\n  \"meal_prep_schedule_id\": 1,\n  \"meal_count_id\": 3,\n  \"appliance_ids\": \"1,2\",\n  \"other_food_preferences\": \"High protein\",\n  \"other_allergies\": \"None\",\n  \"membership_id\": 1,\n  \"status\": \"S\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/update-user-information",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "update-user-information"]
+            }
+          }
+        },
+        {
+          "name": "Update FCM Token",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fcm_token\": \"sample-device-token\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/update-fcm-token",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "update-fcm-token"]
+            }
+          }
+        },
+        {
+          "name": "Buy Membership",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"membership_id\": 1,\n  \"payment_method\": \"stripe\",\n  \"transaction_id\": \"txn_123\",\n  \"response\": \"{}\",\n  \"status\": \"S\",\n  \"coupon_id\": 1\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/buy-membership",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "buy-membership"]
+            }
+          }
+        },
+        {
+          "name": "My Payments",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/my-payments",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "my-payments"]
+            }
+          }
+        },
+        {
+          "name": "Update Current Weight",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"current_value\": 77.5\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/update-current-weight",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "update-current-weight"]
+            }
+          }
+        },
+        {
+          "name": "Update Target Weight",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"current_value\": 77.5,\n  \"target_value\": 72\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/update-target-weight",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "update-target-weight"]
+            }
+          }
+        },
+        {
+          "name": "Fetch Weight History",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/fetch-weight-history?start_date=2026-03-01&end_date=2026-03-25",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "fetch-weight-history"],
+              "query": [
+                { "key": "start_date", "value": "2026-03-01" },
+                { "key": "end_date", "value": "2026-03-25" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "My Packages",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/my-packages",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "my-packages"]
+            }
+          }
+        },
+        {
+          "name": "Replace Food Item",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"food_item_id\": 10,\n  \"replace_food_item_id\": 11\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/replace-food-item",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "replace-food-item"]
+            }
+          }
+        },
+        {
+          "name": "Upload Progress Image",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "image", "type": "file", "src": "" }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/upload-image",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "upload-image"]
+            }
+          }
+        },
+        {
+          "name": "User Progress Images",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/user-progress-images",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "user-progress-images"]
+            }
+          }
+        },
+        {
+          "name": "Update Profile",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"full_name\": \"Updated User\",\n  \"email\": \"updated@example.com\",\n  \"phone\": \"01700000000\",\n  \"age\": 29,\n  \"height\": 176,\n  \"weight\": 77,\n  \"target_value\": 72,\n  \"medical_issue_ids\": \"1,2\",\n  \"allergy_ids\": \"1,2\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/update-profile",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "update-profile"]
+            }
+          }
+        },
+        {
+          "name": "Upload Profile Image",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "image", "type": "file", "src": "" }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/upload-profile-image",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "upload-profile-image"]
+            }
+          }
+        },
+        {
+          "name": "My Coupons",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/my-coupons?status=1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "my-coupons"],
+              "query": [{ "key": "status", "value": "1" }]
+            }
+          }
+        },
+        {
+          "name": "Apply Coupon",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"coupon_code\": \"WELCOME10\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/apply-coupon",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "apply-coupon"]
+            }
+          }
+        },
+        {
+          "name": "Get Daily Average",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/get-daily-average",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "get-daily-average"]
+            },
+            "description": "Current controller implementation uses a hardcoded user id."
+          }
+        },
+        {
+          "name": "Notifications",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/notifications",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "notifications"]
+            }
+          }
+        },
+        {
+          "name": "Delete Profile",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/delete-profile",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "delete-profile"]
+            }
+          }
+        },
+        {
+          "name": "Generate User Diet Plan",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"country_id\": 1,\n  \"state_id\": 1,\n  \"city_id\": 1,\n  \"phone\": \"01700000000\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/generate-user-diet-plan",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "generate-user-diet-plan"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Protected Meals and Dashboard",
+      "item": [
+        {
+          "name": "Save User Diet Plan",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": 1,\n  \"data\": {\n    \"weekly_diet_chart\": [\n      {\n        \"day\": \"Day 1\",\n        \"meals\": [\n          {\n            \"meal_time\": \"Breakfast\",\n            \"food_items\": [\n              {\n                \"name\": \"Oats\",\n                \"quantity\": \"1 cup\",\n                \"data\": {\n                  \"cal\": 150,\n                  \"pro\": 5,\n                  \"car\": 27,\n                  \"fat\": 3,\n                  \"fbr\": 4,\n                  \"typ\": \"VE\"\n                }\n              }\n            ]\n          }\n        ]\n      }\n    ]\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/save-user-diet-plan",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "save-user-diet-plan"]
+            }
+          }
+        },
+        {
+          "name": "Fetch Meals",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/fetch-meals?day=1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "fetch-meals"],
+              "query": [{ "key": "day", "value": "1" }]
+            }
+          }
+        },
+        {
+          "name": "Save Intake Food Item",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"food_id\": 1,\n  \"meal_id\": 1,\n  \"quantity\": 2,\n  \"date\": \"2026-03-25\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/save-intake-food-item",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "save-intake-food-item"]
+            }
+          }
+        },
+        {
+          "name": "Update Water Intake",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"quantity\": 2.5,\n  \"date\": \"2026-03-25\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/update-water-intake",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "update-water-intake"]
+            }
+          }
+        },
+        {
+          "name": "Fetch My Meals",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/fetch-my-meals?date=2026-03-25",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "fetch-my-meals"],
+              "query": [{ "key": "date", "value": "2026-03-25" }]
+            }
+          }
+        },
+        {
+          "name": "Fetch Macro Tracker Data",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/fetch-macro-tracker-data?start_date=2026-03-01&end_date=2026-03-25",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "fetch-macro-tracker-data"],
+              "query": [
+                { "key": "start_date", "value": "2026-03-01" },
+                { "key": "end_date", "value": "2026-03-25" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Dashboard Data",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/get-dashboard-data?date=2026-03-25",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "get-dashboard-data"],
+              "query": [{ "key": "date", "value": "2026-03-25" }]
+            }
+          }
+        },
+        {
+          "name": "Like or Dislike Food Item",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"food_item_id\": 10,\n  \"type\": \"dislike\",\n  \"replace\": 1\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/like-dislike-food-item",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "like-dislike-food-item"]
+            }
+          }
+        },
+        {
+          "name": "Similar Food Items",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "user", "value": "{{apiUser}}" },
+              { "key": "key", "value": "{{apiKey}}" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/similar-food-items?food_item_id=10&search=chicken",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "similar-food-items"],
+              "query": [
+                { "key": "food_item_id", "value": "10" },
+                { "key": "search", "value": "chicken" }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
