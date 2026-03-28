@@ -1,0 +1,48 @@
+# Composer - PHP Dependencies
+/vendor
+
+# NPM - Node.js Dependencies
+/node_modules
+
+# Environment - Secrets & Config
+# This is the most important file to ignore!
+.env.backup
+
+# Laravel Storage - Logs, Caches, & User Uploads
+/storage/framework/
+/storage/logs/
+/storage/app/public/
+
+# Laravel Public - Symlinks, Compiled Assets
+/public/storage
+/public/hot
+/public/build
+/public/mix-manifest.json
+
+# Laravel Cache
+bootstrap/cache/*.php
+
+# OS & IDE
+.DS_Store
+__MACOSX/
+.idea/
+.vscode/
+
+# Testing
+.phpunit.result.cache
+
+# Local Development
+Homestead.json
+Homestead.yaml
+/.sail/
+
+# Debug Logs
+npm-debug.log
+yarn-error.log
+
+/storage
+/public
+config.bat
+branch_structure.json
+temp_auto_push.bat
+temp_interactive_push.bat
