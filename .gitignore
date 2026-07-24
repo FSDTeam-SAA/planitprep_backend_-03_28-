@@ -26,7 +26,6 @@ bootstrap/cache/*.php
 .DS_Store
 __MACOSX/
 .idea/
-.vscode/
 
 # Testing
 .phpunit.result.cache
